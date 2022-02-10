@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">JustForPractice</string>
+    <string name="more">More</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tasks_empty">No tasks yet. \n You can add one by clicking the \'+\' icon.</string>
+</resources>
