@@ -37,12 +37,13 @@ class TaskListFragment : BaseFragment(R.layout.fragment_task_list) {
 
             }
         })
-        val tasks = arrayListOf<Task>()
-        tasks.add(Task("buy groceries", null, false));
-        tasks.add(Task("buy groceries", null, false));
-        tasks.add(Task("buy groceries", null, false));
-        tasks.add(Task("buy groceries", null, false));
-        adapter?.setValues(tasks);
+//        val tasks = arrayListOf<Task>()
+//        tasks.add(Task(1, "buy groceries", null, false))
+//        tasks.add(Task(2, "buy groceries", null, false))
+//        tasks.add(Task(3, "buy groceries", null, false))
+//        tasks.add(Task(4, "buy groceries", null, false))
+
+//        adapter?.setValues(tasks)
         binding.taskListRv.adapter = adapter;
     }
 
