@@ -20,4 +20,5 @@ abstract class BaseFragment(@LayoutRes contentView: Int) : Fragment(contentView)
             }
         })
     }
+
 }

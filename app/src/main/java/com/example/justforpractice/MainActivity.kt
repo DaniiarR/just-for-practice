@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import com.example.justforpractice.tasks.TaskListFragment
+import com.example.justforpractice.tasks.TaskContainerFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<TaskListFragment>(R.id.fragmentContainer)
+                add<TaskContainerFragment>(R.id.fragmentContainer)
             }
         }
 

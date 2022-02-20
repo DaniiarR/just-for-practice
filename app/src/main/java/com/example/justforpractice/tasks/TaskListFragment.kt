@@ -1,54 +1,67 @@
 package com.example.justforpractice.tasks
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.justforpractice.OnItemClickListener
+import androidx.annotation.LayoutRes
 import com.example.justforpractice.R
-import com.example.justforpractice.adapter.TaskAdapter
 import com.example.justforpractice.base.BaseFragment
 import com.example.justforpractice.databinding.FragmentTaskListBinding
-import com.example.justforpractice.model.Task
+import com.example.justforpractice.databinding.FragmentTaskListContainerBinding
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [TaskListFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
 class TaskListFragment : BaseFragment(R.layout.fragment_task_list) {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
     private var _binding: FragmentTaskListBinding? = null;
     private val binding get() = _binding!!
 
-    private var adapter: TaskAdapter? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentTaskListBinding.inflate(inflater, container, false);
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        populateTasks()
-    }
-
-    private fun populateTasks() {
-        adapter = adapter ?: TaskAdapter(object : OnItemClickListener {
-            override fun <T> onItemClick(listItem: T) {
-
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment TaskListFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            TaskListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
             }
-        })
-//        val tasks = arrayListOf<Task>()
-//        tasks.add(Task(1, "buy groceries", null, false))
-//        tasks.add(Task(2, "buy groceries", null, false))
-//        tasks.add(Task(3, "buy groceries", null, false))
-//        tasks.add(Task(4, "buy groceries", null, false))
-
-//        adapter?.setValues(tasks)
-        binding.taskListRv.adapter = adapter;
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null;
     }
 }
