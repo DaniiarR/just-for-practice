@@ -1,5 +1,6 @@
 package com.example.justforpractice.tasks
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.example.justforpractice.R
+import com.example.justforpractice.databinding.ChooseDateModalBinding
 import com.example.justforpractice.databinding.FragmentAddTaskModalBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.*
@@ -36,6 +38,24 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             showKeyboard(binding.addTaskEt)
         }
+        binding.chooseDateButton.setOnClickListener {
+            showDatePicker()
+        }
+    }
+
+    private fun showDatePicker() {
+        val builder = AlertDialog.Builder(requireContext())
+        val inflater = requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val binding = ChooseDateModalBinding.inflate(inflater)
+        builder.setView(binding.root)
+        val dialog = builder.create()
+        dialog.show()
+        binding.addTaskDateCancelButton.setOnClickListener { dialog.dismiss() }
+        binding.addTaskDateDoneButton.setOnClickListener {
+            //TODO Somehow save the date
+        }
+
+
     }
 
     private suspend fun showKeyboard(view: View) {
