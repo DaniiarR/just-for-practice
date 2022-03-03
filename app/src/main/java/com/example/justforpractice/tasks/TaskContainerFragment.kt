@@ -1,20 +1,14 @@
 package com.example.justforpractice.tasks
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
-import com.example.justforpractice.OnItemClickListener
 import com.example.justforpractice.R
-import com.example.justforpractice.adapter.TaskAdapter
 import com.example.justforpractice.adapter.ViewPagerAdapter
 import com.example.justforpractice.base.BaseFragment
-import com.example.justforpractice.databinding.FragmentTaskListBinding
 import com.example.justforpractice.databinding.FragmentTaskListContainerBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.example.justforpractice.tasks.add.AddTaskModalBottomSheet
 import com.google.android.material.tabs.TabLayoutMediator
 
 class TaskContainerFragment : BaseFragment(R.layout.fragment_task_list_container) {

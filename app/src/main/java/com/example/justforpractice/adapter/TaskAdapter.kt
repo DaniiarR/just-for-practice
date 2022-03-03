@@ -9,7 +9,7 @@ import com.example.justforpractice.databinding.TaskListItemBinding
 
 class TaskAdapter(val clickListener: OnItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    private val taskList = arrayListOf<Task>()
+    private var taskList = arrayListOf<Task>()
 
     inner class TaskViewHolder(val binding: TaskListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(task: Task, clickListener: OnItemClickListener) {
@@ -18,9 +18,8 @@ class TaskAdapter(val clickListener: OnItemClickListener) : RecyclerView.Adapter
         }
     }
 
-    fun setValues(tasks: List<Task>) {
-        taskList.clear()
-        taskList.addAll(tasks)
+    fun setValues(tasks: ArrayList<Task>) {
+        taskList = tasks
         notifyDataSetChanged()
     }
 

@@ -1,4 +1,4 @@
-package com.example.justforpractice.tasks
+package com.example.justforpractice.tasks.add
 
 import android.app.AlertDialog
 import android.content.Context
@@ -7,18 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.CalendarView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.example.justforpractice.R
 import com.example.justforpractice.databinding.ChooseDateModalBinding
 import com.example.justforpractice.databinding.FragmentAddTaskModalBottomSheetBinding
+import com.example.justforpractice.tasks.list.TaskListViewModel
+import com.example.justforpractice.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: FragmentAddTaskModalBottomSheetBinding? = null;
     private val binding get() = _binding!!
+
+    private val viewModel by viewModel<TaskListViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +60,9 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         binding.addTaskDateDoneButton.setOnClickListener {
             //TODO Somehow save the date
         }
-
+        binding.addTaskCalendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            toast("$year $month $dayOfMonth")
+        }
 
     }
 
