@@ -18,6 +18,10 @@ import com.example.justforpractice.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDate
+import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZoneOffset
 
 class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
 
@@ -47,6 +51,7 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         binding.chooseDateButton.setOnClickListener {
             showDatePicker()
         }
+        viewModel.createTask()
     }
 
     private fun showDatePicker() {
@@ -56,12 +61,13 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         builder.setView(binding.root)
         val dialog = builder.create()
         dialog.show()
+        viewModel.setDate(OffsetDateTime.now())
         binding.addTaskDateCancelButton.setOnClickListener { dialog.dismiss() }
         binding.addTaskDateDoneButton.setOnClickListener {
             //TODO Somehow save the date
         }
         binding.addTaskCalendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            toast("$year $month $dayOfMonth")
+            viewModel.setDate(OffsetDateTime.of(dayOfMonth, month, dayOfMonth, -1, -1, -1, -1, OffsetDateTime.now().offset))
         }
 
     }

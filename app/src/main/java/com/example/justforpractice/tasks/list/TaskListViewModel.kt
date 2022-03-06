@@ -9,13 +9,15 @@ import com.example.justforpractice.model.Task
 import com.example.justforpractice.repository.AppRepository
 import com.example.justforpractice.utils.Resource
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
+import org.threeten.bp.OffsetDateTime
 import java.lang.Exception
 
 class TaskListViewModel(val repository: AppRepository) : ViewModel() {
 
     private val tasks = MutableLiveData<Resource<List<Task>>>()
 
-    private val taskToAdd = MutableLiveData<Task>()
+    private val taskToAdd = MutableLiveData<Task?>()
 
     init {
         fetchTasks()
@@ -31,11 +33,17 @@ class TaskListViewModel(val repository: AppRepository) : ViewModel() {
                 tasks.postValue(Resource.error("Could not fetch users from database", null))
             }
         }
-        tasks.value = Resource.success(arrayListOf(Task(1, "abc", null, false)))
     }
 
-    fun setDate() {
-
+    fun createTask() {
+        taskToAdd.value = Task()
     }
+
+    fun setDate(date: OffsetDateTime) {
+        taskToAdd.value?.dateTime = date
+    }
+
     fun getTasks(): LiveData<Resource<List<Task>>> = tasks
+
+
 }

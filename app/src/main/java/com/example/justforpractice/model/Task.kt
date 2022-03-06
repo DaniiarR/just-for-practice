@@ -7,10 +7,11 @@ import java.util.*
 
 @Entity(tableName = "tasks")
 class Task(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    var name: String,
+    var name: String? = null,
     var additionalInfo: String? = null,
     var dateTime: OffsetDateTime? = null,
     var isDone: Boolean = false
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    val id: Long? = null
+}
