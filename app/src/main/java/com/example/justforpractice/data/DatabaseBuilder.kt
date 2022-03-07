@@ -21,6 +21,8 @@ object DatabaseBuilder {
             context,
             AppDatabase::class.java,
             "AppDatabase"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
 
 }

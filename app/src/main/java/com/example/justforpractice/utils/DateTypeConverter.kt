@@ -1,23 +1,24 @@
 package com.example.justforpractice.utils
 
 import androidx.room.TypeConverter
+import org.threeten.bp.LocalDate
 import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
-object DateTypeConverters {
-    private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+object DateTypeConverter {
+    private val formatter = DateTimeFormatter.ISO_LOCAL_DATE
 
     @TypeConverter
     @JvmStatic
-    fun toOffsetDateTime(value: String?): OffsetDateTime? {
+    fun toOffsetDateTime(value: String?): LocalDate? {
         return value?.let {
-            return formatter.parse(value, OffsetDateTime::from)
+            return formatter.parse(value, LocalDate::from)
         }
     }
 
     @TypeConverter
     @JvmStatic
-    fun fromOffsetDateTime(date: OffsetDateTime?): String? {
+    fun fromOffsetDateTime(date: LocalDate?): String? {
         return date?.format(formatter)
     }
 }

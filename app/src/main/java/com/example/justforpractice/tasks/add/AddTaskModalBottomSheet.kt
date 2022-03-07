@@ -2,6 +2,7 @@ package com.example.justforpractice.tasks.add
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,13 +62,13 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         builder.setView(binding.root)
         val dialog = builder.create()
         dialog.show()
-        viewModel.setDate(OffsetDateTime.now())
+        viewModel.setDate(LocalDate.now())
         binding.addTaskDateCancelButton.setOnClickListener { dialog.dismiss() }
         binding.addTaskDateDoneButton.setOnClickListener {
             //TODO Somehow save the date
         }
-        binding.addTaskCalendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            viewModel.setDate(OffsetDateTime.of(dayOfMonth, month, dayOfMonth, -1, -1, -1, -1, OffsetDateTime.now().offset))
+        binding.addTaskCalendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
         }
 
     }
@@ -78,6 +79,11 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
             view, InputMethodManager.HIDE_IMPLICIT_ONLY
         )
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        viewModel.deleteNewTask()
     }
 
     override fun onDestroyView() {

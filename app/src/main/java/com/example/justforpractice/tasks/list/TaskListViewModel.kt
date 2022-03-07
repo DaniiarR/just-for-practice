@@ -13,7 +13,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.OffsetDateTime
 import java.lang.Exception
 
-class TaskListViewModel(val repository: AppRepository) : ViewModel() {
+class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
 
     private val tasks = MutableLiveData<Resource<List<Task>>>()
 
@@ -39,11 +39,15 @@ class TaskListViewModel(val repository: AppRepository) : ViewModel() {
         taskToAdd.value = Task()
     }
 
-    fun setDate(date: OffsetDateTime) {
-        taskToAdd.value?.dateTime = date
+    fun setDate(date: LocalDate) {
+        taskToAdd.value?.date = date
     }
 
     fun getTasks(): LiveData<Resource<List<Task>>> = tasks
+
+    fun deleteNewTask() {
+        taskToAdd.value = null
+    }
 
 
 }
