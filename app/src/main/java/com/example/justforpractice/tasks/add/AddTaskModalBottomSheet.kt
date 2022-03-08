@@ -4,25 +4,24 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.format.DateFormat.is24HourFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.CalendarView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.example.justforpractice.R
 import com.example.justforpractice.databinding.ChooseDateModalBinding
 import com.example.justforpractice.databinding.FragmentAddTaskModalBottomSheetBinding
 import com.example.justforpractice.tasks.list.TaskListViewModel
-import com.example.justforpractice.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.threeten.bp.LocalDate
-import org.threeten.bp.OffsetDateTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZoneOffset
+import org.threeten.bp.*
 
 class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
 
@@ -55,6 +54,19 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         viewModel.createTask()
     }
 
+    private fun setupObserver(addTaskTimeEt: TextInputEditText) {
+        viewModel.timeToAdd.observe(viewLifecycleOwner) {
+            it?.let {
+                viewModel.addTimeToTask(it)
+                setTimeText(addTaskTimeEt, it.hour, it.minute)
+            }
+        }
+    }
+
+    private fun setTimeText(addTaskTimeEt: TextInputEditText, hour: Int, minute: Int) {
+         addTaskTimeEt.setText("$hour:$minute")
+    }
+
     private fun showDatePicker() {
         val builder = AlertDialog.Builder(requireContext())
         val inflater = requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -62,6 +74,7 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         builder.setView(binding.root)
         val dialog = builder.create()
         dialog.show()
+        setupObserver(binding.addTaskTimeEt)
         viewModel.setDate(LocalDate.now())
         binding.addTaskDateCancelButton.setOnClickListener { dialog.dismiss() }
         binding.addTaskDateDoneButton.setOnClickListener {
@@ -70,7 +83,25 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         binding.addTaskCalendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
         }
+        binding.addTaskTimeEt.setOnClickListener {
+            showTimePicker()
+        }
 
+    }
+
+    private fun showTimePicker() {
+        val isSystem24Hour = is24HourFormat(requireContext())
+        val clockFormat = if (isSystem24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+        val picker = MaterialTimePicker.Builder()
+                .setTimeFormat(clockFormat)
+                .setHour(OffsetTime.now().hour)
+                .setMinute(OffsetTime.now().minute)
+                .build()
+        picker.show(parentFragmentManager, null)
+        picker.addOnPositiveButtonClickListener {
+            viewModel.setTime(OffsetTime.of(picker.hour, picker.minute, 0, 0, OffsetDateTime.now().offset))
+            picker.dismiss()
+        }
     }
 
     private suspend fun showKeyboard(view: View) {

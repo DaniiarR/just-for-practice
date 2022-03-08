@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="selectedTabColor">#1973e7</color>
+    <color name="textColor">@android:color/secondary_text_light</color>
 </resources>

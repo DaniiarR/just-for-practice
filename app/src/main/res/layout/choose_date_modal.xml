@@ -37,13 +37,16 @@
             android:id="@+id/addTaskTimeTil"
             android:layout_width="0dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_height="45dp">
+            android:layout_height="58dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/addTaskTimeEt"
                 android:layout_width="match_parent"
                 android:textSize="12sp"
+                android:focusable="false"
+                android:cursorVisible="false"
                 android:hint="Set time"
+                android:inputType="none"
                 android:textColorHint="@android:color/secondary_text_light"
                 android:layout_height="wrap_content" />
 

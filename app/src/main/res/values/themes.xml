@@ -2,9 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.JustForPractice" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white_accent</item>
+        <item name="colorPrimary">@color/selectedTabColor</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@android:color/secondary_text_light</item>
+        <item name="colorAccent">@color/selectedTabColor</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/white_accent</item>
@@ -16,6 +17,11 @@
         <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
     </style>
 
+    <style name="Widget.App.TimePicker.Clock" parent="Widget.MaterialComponents.TimePicker.Clock">
+        <item name="clockFaceBackgroundColor">@color/selectedTabColor</item>
+        <item name="clockHandColor">@color/selectedTabColor</item>
+        <item name="clockNumberTextColor">@color/selectedTabColor</item>
+    </style>
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
         <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
     </style>
@@ -23,6 +29,10 @@
     <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
         <item name="android:colorAccent">@color/selectedTabColor</item>
         <item name="android:colorControlActivated">@color/selectedTabColor</item>
+    </style>
+
+    <style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined" parent="">
+        <item name="colorControlActivated">@color/selectedTabColor</item>
     </style>
 
     <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog"> <item name="android:windowIsFloating">false</item> <item name="android:statusBarColor">@android:color/transparent</item> <item name="android:windowSoftInputMode">adjustResize</item> </style>

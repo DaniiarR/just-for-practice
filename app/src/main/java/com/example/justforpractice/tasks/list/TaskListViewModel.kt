@@ -11,6 +11,7 @@ import com.example.justforpractice.utils.Resource
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.OffsetTime
 import java.lang.Exception
 
 class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
@@ -18,6 +19,7 @@ class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
     private val tasks = MutableLiveData<Resource<List<Task>>>()
 
     private val taskToAdd = MutableLiveData<Task?>()
+    val timeToAdd = MutableLiveData<OffsetTime?>()
 
     init {
         fetchTasks()
@@ -47,7 +49,14 @@ class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
 
     fun deleteNewTask() {
         taskToAdd.value = null
+        timeToAdd.value = null
     }
 
+    fun setTime(time: OffsetTime) {
+        timeToAdd.value = time
+    }
 
+    fun addTimeToTask(time: OffsetTime) {
+        taskToAdd.value?.time = time
+    }
 }
