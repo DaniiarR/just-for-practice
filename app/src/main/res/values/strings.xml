@@ -9,4 +9,5 @@
     <string name="new_task">New task</string>
     <string name="save">Save</string>
     <string name="add_task">You don\'t have tasks yet.\n You can add a task by pressing the \'+\' button.</string>
+    <string name="add_details">Add details</string>
 </resources>
