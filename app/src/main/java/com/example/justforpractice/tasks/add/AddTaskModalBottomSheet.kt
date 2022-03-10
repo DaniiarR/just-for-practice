@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.CalendarView
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +19,7 @@ import com.example.justforpractice.R
 import com.example.justforpractice.databinding.ChooseDateModalBinding
 import com.example.justforpractice.databinding.FragmentAddTaskModalBottomSheetBinding
 import com.example.justforpractice.tasks.list.TaskListViewModel
+import com.example.justforpractice.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputEditText
@@ -65,14 +68,30 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
         }
         binding.addTaskEt.doOnTextChanged { text, _, _, _ ->
             viewModel.setTaskName(text.toString())
+            enableDisableDoneButton(binding.saveButton)
         }
         binding.addDescriptionEt.doOnTextChanged { text, _, _, _ ->
             viewModel.setTaskDescription(text.toString())
+            enableDisableDoneButton(binding.saveButton)
+        }
+        binding.saveButton.setOnClickListener {
+            toast("task saved")
+        }
+    }
+
+    private fun enableDisableDoneButton(button: Button) {
+        val isEnabled = viewModel.isTask()
+        button.isEnabled = isEnabled
+        if (isEnabled) {
+            button.setTextColor(ContextCompat.getColor(requireContext(), R.color.selectedTabColor))
+        } else {
+            button.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
         }
     }
 
     private fun setupDateObserver(chip: Chip) {
         viewModel.dateToAdd.observe(viewLifecycleOwner) {
+            enableDisableDoneButton(binding.saveButton)
             if (it != null){
                 viewModel.addDateToTask(it)
                 chip.visibility = View.VISIBLE
@@ -85,6 +104,7 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupTimeObserver(chip: Chip) {
         viewModel.timeToAdd.observe(viewLifecycleOwner) {
+            enableDisableDoneButton(binding.saveButton)
             it?.let { chip.text = viewModel.getFormattedDateTime() }
         }
     }

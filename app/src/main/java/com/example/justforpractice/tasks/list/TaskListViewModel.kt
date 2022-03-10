@@ -99,6 +99,15 @@ class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
         taskToAdd.value?.additionalInfo = description
     }
 
+    fun isTask(): Boolean {
+        taskToAdd.value?.let {
+            return !it.additionalInfo.isNullOrEmpty()
+                    || !it.name.isNullOrEmpty()
+                    || it.date != null
+                    || it.time != null
+        }
+        return false
+    }
 
 
 }

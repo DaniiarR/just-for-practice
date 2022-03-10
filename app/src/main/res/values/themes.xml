@@ -6,6 +6,7 @@
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@android:color/secondary_text_light</item>
         <item name="colorAccent">@color/selectedTabColor</item>
+        <item name="colorOnSurface">@android:color/darker_gray</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/white_accent</item>
