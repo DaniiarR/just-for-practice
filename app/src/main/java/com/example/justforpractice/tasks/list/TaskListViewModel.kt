@@ -27,7 +27,7 @@ class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
         fetchTasks()
     }
 
-    private fun fetchTasks() {
+    fun fetchTasks() {
         viewModelScope.launch {
             tasks.postValue(Resource.loading(null))
             try {
@@ -107,6 +107,14 @@ class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
                     || it.time != null
         }
         return false
+    }
+
+    fun saveTask() {
+        viewModelScope.launch {
+            taskToAdd.value?.let {
+                repository.insertTask(it)
+            }
+        }
     }
 
 

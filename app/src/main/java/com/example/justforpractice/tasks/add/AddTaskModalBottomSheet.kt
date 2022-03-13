@@ -18,14 +18,15 @@ import androidx.lifecycle.lifecycleScope
 import com.example.justforpractice.R
 import com.example.justforpractice.databinding.ChooseDateModalBinding
 import com.example.justforpractice.databinding.FragmentAddTaskModalBottomSheetBinding
+import com.example.justforpractice.events.AddTaskEvent
 import com.example.justforpractice.tasks.list.TaskListViewModel
-import com.example.justforpractice.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.*
+import org.greenrobot.eventbus.EventBus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.*
 
@@ -75,8 +76,14 @@ class AddTaskModalBottomSheet : BottomSheetDialogFragment() {
             enableDisableDoneButton(binding.saveButton)
         }
         binding.saveButton.setOnClickListener {
-            toast("task saved")
+            saveTask()
         }
+    }
+
+    private fun saveTask() {
+        viewModel.saveTask()
+        EventBus.getDefault().post(AddTaskEvent())
+        dismiss()
     }
 
     private fun enableDisableDoneButton(button: Button) {

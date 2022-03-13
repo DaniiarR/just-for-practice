@@ -3,9 +3,9 @@ package com.example.justforpractice.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.justforpractice.OnItemClickListener
 import com.example.justforpractice.model.Task
 import com.example.justforpractice.databinding.TaskListItemBinding
+import com.example.justforpractice.utils.OnItemClickListener
 
 class TaskAdapter(val clickListener: OnItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 

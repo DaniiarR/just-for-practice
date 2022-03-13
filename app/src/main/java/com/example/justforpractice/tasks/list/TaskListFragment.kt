@@ -7,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import com.example.justforpractice.OnItemClickListener
 import com.example.justforpractice.R
 import com.example.justforpractice.adapter.TaskAdapter
 import com.example.justforpractice.base.BaseFragment
 import com.example.justforpractice.databinding.FragmentTaskListBinding
+import com.example.justforpractice.events.AddTaskEvent
 import com.example.justforpractice.model.Task
-import com.example.justforpractice.toast
-import com.example.justforpractice.utils.Resource
-import com.example.justforpractice.utils.Status
+import com.example.justforpractice.utils.*
+import org.greenrobot.eventbus.Subscribe
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TaskListFragment : BaseFragment(R.layout.fragment_task_list) {
@@ -32,6 +31,16 @@ class TaskListFragment : BaseFragment(R.layout.fragment_task_list) {
     ): View? {
         _binding = FragmentTaskListBinding.inflate(inflater, container, false);
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerForEvents()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterFromEvents()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,5 +86,10 @@ class TaskListFragment : BaseFragment(R.layout.fragment_task_list) {
             }
         })
         binding.tasksRv.adapter = adapter
+    }
+
+    @Subscribe
+    fun onAddTaskEvent(event: AddTaskEvent) {
+        viewModel.fetchTasks()
     }
 }
