@@ -8,6 +8,9 @@ interface OnItemClickListener {
     fun <T> onItemClick(listItem: T)
 }
 
+interface OnTaskClickListener {
+    fun onDoneButtonClicked()
+}
 fun Fragment.toast(message: String?) {
     Toast.makeText(this.requireContext(), message ?: "An error occurred.", Toast.LENGTH_SHORT).show()
 }

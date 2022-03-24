@@ -113,6 +113,7 @@ class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
         viewModelScope.launch {
             taskToAdd.value?.let {
                 repository.insertTask(it)
+                fetchTasks()
             }
         }
     }

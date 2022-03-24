@@ -1,11 +1,9 @@
 package com.example.justforpractice.tasks.list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import com.example.justforpractice.R
 import com.example.justforpractice.adapter.TaskAdapter
@@ -63,7 +61,7 @@ class TaskListFragment : BaseFragment(R.layout.fragment_task_list) {
                     }
                     binding.tasksProgressBar.visibility = View.GONE
                     it.data?.let {
-                        tasks -> adapter.setValues(tasks as ArrayList<Task>)
+                        tasks -> adapter.taskList = tasks as ArrayList<Task>
                     }
                 }
                 Status.LOADING -> {
@@ -80,16 +78,14 @@ class TaskListFragment : BaseFragment(R.layout.fragment_task_list) {
     }
 
     private fun setupUI() {
-        adapter = TaskAdapter(object : OnItemClickListener {
-            override fun <T> onItemClick(listItem: T) {
-                TODO("Not yet implemented")
-            }
-        })
+        adapter = TaskAdapter { task ->
+
+        }
         binding.tasksRv.adapter = adapter
     }
 
     @Subscribe
     fun onAddTaskEvent(event: AddTaskEvent) {
-        viewModel.fetchTasks()
+//        viewModel.fetchTasks()
     }
 }
