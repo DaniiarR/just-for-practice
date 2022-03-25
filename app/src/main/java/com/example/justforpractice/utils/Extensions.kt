@@ -2,6 +2,7 @@ package com.example.justforpractice.utils
 
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.justforpractice.model.Task
 import org.greenrobot.eventbus.EventBus
 
 interface OnItemClickListener {
@@ -9,8 +10,11 @@ interface OnItemClickListener {
 }
 
 interface OnTaskClickListener {
-    fun onDoneButtonClicked()
+    fun onDoneButtonClick(task: Task)
+    fun onChipClick(task: Task)
+    fun onTaskClick(task: Task)
 }
+
 fun Fragment.toast(message: String?) {
     Toast.makeText(this.requireContext(), message ?: "An error occurred.", Toast.LENGTH_SHORT).show()
 }

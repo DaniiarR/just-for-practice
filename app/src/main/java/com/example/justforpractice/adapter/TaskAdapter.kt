@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.justforpractice.model.Task
 import com.example.justforpractice.databinding.TaskListItemBinding
+import com.example.justforpractice.utils.OnTaskClickListener
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
-class TaskAdapter(val clickListener: (Task) -> Unit) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(val clickListener: OnTaskClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     var taskList = arrayListOf<Task>()
     set(value) {
@@ -18,8 +19,17 @@ class TaskAdapter(val clickListener: (Task) -> Unit) : RecyclerView.Adapter<Task
     }
 
     inner class TaskViewHolder(val binding: TaskListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(task: Task, clickListener: (Task) -> Unit) {
+        fun bind(task: Task, clickListener: OnTaskClickListener) {
             binding.taskRb.isChecked = task.isDone
+            binding.taskRb.setOnCheckedChangeListener { buttonView, isChecked ->
+                clickListener.onChipClick(task)
+            }
+            binding.dateTimeChip.setOnClickListener {
+                clickListener.onChipClick(task)
+            }
+            binding.task.setOnClickListener {
+                clickListener.onTaskClick(task)
+            }
             task.name?.let { binding.taskNameTv.text = it }
             task.additionalInfo?.let { binding.taskDescriptionTv.text = it }
             task.date?.let {

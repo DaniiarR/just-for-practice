@@ -53,6 +53,8 @@ class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
 
     fun getDate(): Long? = taskToAdd.value?.date?.atStartOfDay()?.toInstant(OffsetDateTime.now().offset)?.toEpochMilli()
 
+    fun getDateFromTask(task: Task): Long? = task.date?.atStartOfDay()?.toInstant(OffsetDateTime.now().offset)?.toEpochMilli()
+
     fun getFormattedDateTime(): String? {
         val formatter = DateTimeFormatter.ofPattern("EEE, MMM dd")
         var dateTime = formatter.format(taskToAdd.value?.date)
@@ -115,6 +117,15 @@ class TaskListViewModel(private val repository: AppRepository) : ViewModel() {
                 repository.insertTask(it)
                 fetchTasks()
             }
+        }
+    }
+
+    fun editDateTime(task: Task) {
+        task.date = dateToAdd.value
+        task.time = timeToAdd.value
+        viewModelScope.launch {
+            repository.updateTask(task)
+            fetchTasks()
         }
     }
 

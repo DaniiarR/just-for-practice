@@ -11,4 +11,6 @@ class AppRepository(private val database: AppDatabase) {
 
     suspend fun insertTask(task: Task) = dao.insertTask(task)
 
+    suspend fun updateTask(task: Task) = dao.updateTask(task)
+
 }
